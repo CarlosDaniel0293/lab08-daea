@@ -1,0 +1,9 @@
+C:\Users\Usuario\Documents\6 CICLO\Desarrollo de aplicaciones empresariales avanzado\lab08\csharp\out\csharp.exe
+C:\Users\Usuario\Documents\6 CICLO\Desarrollo de aplicaciones empresariales avanzado\lab08\csharp\out\csharp.dll
+C:\Users\Usuario\Documents\6 CICLO\Desarrollo de aplicaciones empresariales avanzado\lab08\csharp\out\csharp.deps.json
+C:\Users\Usuario\Documents\6 CICLO\Desarrollo de aplicaciones empresariales avanzado\lab08\csharp\out\csharp.runtimeconfig.json
+C:\Users\Usuario\Documents\6 CICLO\Desarrollo de aplicaciones empresariales avanzado\lab08\csharp\out\csharp.pdb
+C:\Users\Usuario\Documents\6 CICLO\Desarrollo de aplicaciones empresariales avanzado\lab08\csharp\out\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Usuario\Documents\6 CICLO\Desarrollo de aplicaciones empresariales avanzado\lab08\csharp\out\Pipelines.Sockets.Unofficial.dll
+C:\Users\Usuario\Documents\6 CICLO\Desarrollo de aplicaciones empresariales avanzado\lab08\csharp\out\StackExchange.Redis.dll
+C:\Users\Usuario\Documents\6 CICLO\Desarrollo de aplicaciones empresariales avanzado\lab08\csharp\out\System.IO.Pipelines.dll

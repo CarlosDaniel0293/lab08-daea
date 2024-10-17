@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  redis:
+    build: ./redis
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend  # Agregar a la red
+
+  flask:
+    build: ./flask
+    container_name: flask
+    ports:
+      - "5000:5000"
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=redis
+    networks:
+      - backend  # Agregar a la red
+
+  csharp_service:
+    build: ./csharp  # Ruta al directorio donde está tu proyecto C# y Dockerfile
+    container_name: csharp_service
+    depends_on:
+      - redis
+      - postgres  # Agregar dependencia de PostgreSQL
+    environment:
+      - REDIS_HOST=redis
+      - ConnectionStrings__DefaultConnection=Host=postgres;Username=your_user;Password=your_password;Database=your_database  # Configura tu cadena de conexión
+    networks:
+      - backend  # Agregar a la red
+
+  postgres:
+    image: postgres:latest  # Usar la imagen de PostgreSQL
+    container_name: postgres
+    environment:
+      POSTGRES_USER: your_user          # Cambia esto por el nombre de usuario que desees
+      POSTGRES_PASSWORD: your_password    # Cambia esto por la contraseña que desees
+      POSTGRES_DB: your_database          # Cambia esto por el nombre de la base de datos que desees
+    ports:
+      - "5432:5432"                      # Exponer el puerto 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistencia de datos
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql  # Montar el archivo SQL
+    networks:
+      - backend  # Agregar a la red
+
+  result-app:
+    build: ./result-app
+    container_name: result-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - backend  # Agregar a la red
+
+volumes:
+  postgres_data:                      # Declarar el volumen para almacenar los datos de PostgreSQL
+
+networks:
+  backend:
+    driver: bridge

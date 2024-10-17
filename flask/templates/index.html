@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vote for your favorite option!</h1>
+    <form id="voteForm">
+        <button type="button" name="vote" value="option1" class="vote-button">Option 1</button>
+        <button type="button" name="vote" value="option2" class="vote-button">Option 2</button>
+    </form>
+    
+    <h2>Results:</h2>
+    <div id="results">
+        <p>Loading results...</p>
+    </div>
+
+    <script>
+        const buttons = document.querySelectorAll('.vote-button');
+        const resultsDiv = document.getElementById('results');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                const vote = this.value;
+                console.log(`Voted for: ${vote}`); // Depuración
+
+                fetch('/vote', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: `vote=${encodeURIComponent(vote)}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.status === "success") {
+                        alert(`You voted for: ${data.vote}`);
+                        fetchResults();  // Actualizar los resultados
+                    } else {
+                        alert(`Error: ${data.message}`);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            });
+        });
+
+        // Obtener los resultados
+        function fetchResults() {
+            fetch('/results')
+            .then(response => response.json())
+            .then(data => {
+                let resultsHTML = '';
+                for (const [key, value] of Object.entries(data)) {
+                    resultsHTML += `<p>${key}: ${value}</p>`;
+                }
+                resultsDiv.innerHTML = resultsHTML;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Cargar los resultados al iniciar
+        fetchResults();
+    </script>
+</body>
+</html>

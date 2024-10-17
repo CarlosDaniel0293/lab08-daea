@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Votación</title>
+</head>
+<body>
+    <h1>Resultados de Votación</h1>
+    <div id="results"></div>
+
+    <script>
+        async function fetchVotes() {
+            try {
+                const response = await fetch('http://localhost:3000/votes');
+                const data = await response.json();
+                document.getElementById('results').innerHTML = `
+                    <p>Opción 1: ${data.option1_votes} votos</p>
+                    <p>Opción 2: ${data.option2_votes} votos</p>
+                `;
+            } catch (error) {
+                console.error('Error al obtener los votos:', error);
+            }
+        }
+
+        fetchVotes();
+    </script>
+</body>
+</html>
